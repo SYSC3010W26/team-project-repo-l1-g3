@@ -4,7 +4,7 @@
 ### Week: 4 (Jan 28 – FEB3)
 ___
 1. **How many hours did you spend on the project this week? (0-10)**
-   8
+  - 8
 
 2. **Give rough breakdown of hours spent on 1-3 of the following:**
    1. Writing/Documenting: 4 hours
