@@ -3,13 +3,14 @@ import time
 
 # Use your existing firebaseConfig here
 firebaseConfig = {
-    "apiKey": "AIzaSyAC0Ln-uwvVyqcfXWOO52_uFt-q_KuVr9A",
-    "authDomain": "soupercomputer-f0dad.firebaseapp.com",
-    "databaseURL": "https://soupercomputer-f0dad-default-rtdb.firebaseio.com",
-    "projectId": "soupercomputer-f0dad",
-    "storageBucket": "soupercomputer-f0dad.firebasestorage.app",
-    "messagingSenderId": "111112419939",
-    "appId": "1:111112419939:web:121ce21735c3658a185656"} 
+    "apiKey": "YOUR_API_KEY",
+	"authDomain": "soupercomputer-f0dad.firebaseapp.com",
+	"databaseURL": "https://soupercomputer-f0dad-default-rtdb.firebaseio.com",
+	"projectId": "soupercomputer-f0dad",
+	"storageBucket": "soupercomputer-f0dad.firebasestorage.app",
+	"messagingSenderId": "111112419939",
+	"appId": "1:111112419939:web:121ce21735c3658a185656"
+} 
 
 firebase = pyrebase.initialize_app(firebaseConfig)
 db = firebase.database()
