@@ -1,19 +1,29 @@
-from gpiozero import Servo
-from time import sleep
+import RPi.GPIO as GPIO
+import time
 
-# GPIO 18 is safe with Sense HAT
-servo = Servo(18)
+SERVO_PIN = 18
 
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(SERVO_PIN, GPIO.OUT)
+servo = GPIO.PWM(SERVO_PIN, 50) # 50Hz
+servo.start(0)
+
+print("--- HARDWARE TEST: SERVO MOTOR ---")
 try:
-    for i in range(10):
-        print("Servo Mid...")
-        servo.mid()
-        sleep(1)
-        print("Servo Min...")
-        servo.min()
-        sleep(1)
-        print("Servo Max...")
-        servo.max()
-        sleep(1)
-except KeyboardInterrupt:
-    servo.detach()
+    print("Moving to 90 degrees (Open)...")
+    GPIO.output(SERVO_PIN, True)
+    servo.ChangeDutyCycle(7)
+    time.sleep(1)
+    
+    print("Moving to 0 degrees (Closed)...")
+    servo.ChangeDutyCycle(2)
+    time.sleep(1)
+    
+    GPIO.output(SERVO_PIN, False)
+    servo.ChangeDutyCycle(0)
+    print("Test passed.")
+
+finally:
+    servo.stop()
+    del servo       # <--- THE FIX: Destroys the PWM object first
+    GPIO.cleanup()  # Then safely cleans up the pins
