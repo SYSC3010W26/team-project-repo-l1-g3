@@ -53,9 +53,9 @@ TRAVEL_TIMES_BACKWARD = {
 }
 
 # --- FIREBASE SETUP ---
-DATABASE_URL = "https://soupercomputer-default-rtdb.firebaseio.com/"
+DATABASE_URL = "https://soupercomputer-group-l1g3-default-rtdb.firebaseio.com/"
 if not firebase_admin._apps:
-    cred = credentials.Certificate("keys.json")
+    cred = credentials.Certificate("serviceAccountKey.json")
     firebase_admin.initialize_app(cred, {'databaseURL': DATABASE_URL})
 
 # --- HELPER FUNCTIONS ---
@@ -110,11 +110,11 @@ def dispense_soup_base(soup_type):
         spin_360_servo(indexer_servo, "fwd", time_fwd)
         
         print(f"  -> Opening hopper door...")
-        spin_360_servo(door_servo, "fwd", 0.08) # Tune open time
+        spin_360_servo(door_servo, "fwd", 0.3) # Tune open time
         time.sleep(0.5) # Wait for powder to fall
         
         print(f"  -> Closing hopper door...")
-        spin_360_servo(door_servo, "bwd", 0.08) # Tune close time
+        spin_360_servo(door_servo, "bwd", 0.3) # Tune close time
         
         print(f"  -> Returning indexer to Exit Drop ({time_bwd}s)")
         spin_360_servo(indexer_servo, "bwd", time_bwd)
@@ -150,10 +150,17 @@ def main():
 
             # Processing Logic
             if current_order and boiler_status == "ready" and my_status == "idle":
+                print("\n[EVENT] Boiler ready. Checking safety interlocks...")
                 
-                
-                
-                print("[EVENT] Starting mixing sequence...")
+                # GLOBAL SAFETY CHECK (From Laavanya's Garnish Node)
+                if not bowl_present:
+                    print("[ERROR] Safety Interlock: No bowl detected! Cannot dispense powder.")
+                    db.reference('/mixer/status').set("error_no_bowl")
+                    sense.show_letter("X", text_colour=[255, 0, 0])
+                    time.sleep(2)
+                    continue
+
+                print("[EVENT] Bowl is present. Starting powder and mixing sequence...")
                 db.reference('/mixer/status').set("mixing")
                 sense.show_letter("M", text_colour=[0, 0, 255])
 
