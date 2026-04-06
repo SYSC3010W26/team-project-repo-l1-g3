@@ -1,6 +1,6 @@
 # Souper Kiosk
 
-**Course:** ELEC 3010  
+**Course:** SYSC 3010  
 **Group Number:** [L1 G3]  
 **TA:** [Albert Lin]  
 
