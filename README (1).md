@@ -1,12 +1,15 @@
+# Souper Kiosk
+
 **Course:** SYSC 3010  
 **Group Number:** L1G3  
 **TA:** Albert Lin  
 
 **Team Members:**
-- Annan Jiang
-- Ben Gorman
-- John Patterson
-- Laavanya Nayar
+- Annan Jiang 
+- Ben Gorman 
+- John Patterson 
+- Laavanya Nayar 
+
 ---
 
 ## Project Summary
@@ -27,7 +30,7 @@ Each node communicates via Firebase Realtime Database. Order history and invento
 ## Repository Structure
 
 ```
-3010_L1G3/
+team-project-repo-l1-g3/
 ├── README.md                  # This file
 ├── Souper_Kiosk/              # Kiosk Node (coordinator)
 │   ├── kiosk.py               # Main coordinator: polls Firebase, drives kitchen workflow
@@ -67,6 +70,7 @@ Each node communicates via Firebase Realtime Database. Order history and invento
 **Kiosk Node (Raspberry Pi):**
 - Raspberry Pi (any model with GPIO support)
 - WiFi/Ethernet connectivity to Firebase
+- Optional: Camera for QR code scanning at pickup station
 
 **Boiler Node (Raspberry Pi):**
 - Heating pad (12V relay controlled)
@@ -102,8 +106,8 @@ FIREBASE_CONFIG = {
 
 1. **Clone the repository** on each Raspberry Pi:
    ```bash
-   git clone https://github.com/annankun/3010_kiosk.git
-   cd 3010_L1G3
+   git clone https://github.com/SYSC3010W26/team-project-repo-l1-g3.git
+   cd team-project-repo-l1-g3
    ```
 
 2. **Install common dependencies** (all nodes):
@@ -210,10 +214,10 @@ You should see status updates as orders flow through the system:
 Order [key] => ready
 ```
 
-### Scanner
-Point the camera at a valid order QR code:
-- **Valid scan:** Order is marked `ready`, deleted from Firebase, and removed from queue.
-- **Invalid scan:** Order does not exist or is not yet ready.
+### Scanner (Optional Pickup Station)
+Point the camera at a valid order QR code to validate and remove the order from the queue:
+- Valid scan: Order is deleted from Firebase and removed from processing.
+- Invalid scan: Order does not exist or is not yet ready.
 
 ### Web Interface
 Opening the Firebase Hosting URL displays the soup ordering menu with all 6 soup types and 6 toppings.
@@ -286,6 +290,3 @@ The system uses the following Firebase structure:
 **Temperature sensor not reading:**
 - Verify 1-wire interface is enabled: `raspi-config` → Interfacing Options → 1-Wire
 - Check DS18B20 wiring (VCC, GND, DATA + 4.7kΩ pull-up resistor).
-
-
-
